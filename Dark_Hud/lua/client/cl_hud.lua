@@ -49,7 +49,7 @@ end
 local function DrawCircleStat(x, y, percent, color, icon)
     local radius = 40
     local thickness = 20
-    local startAngle = 180
+    local startAngle = 270
     local endAngle = startAngle + (percent * 360)
 
     -- Fond noir (100%)
@@ -64,6 +64,7 @@ local function DrawCircleStat(x, y, percent, color, icon)
     surface.DrawTexturedRect(x - 16, y - 16, 32, 32)
 end
 
+
 -- Hook : Dessin du HUD
 hook.Add("HUDPaint", "CustomHUD", function()
     local ply = LocalPlayer()
@@ -71,13 +72,14 @@ hook.Add("HUDPaint", "CustomHUD", function()
 
     -- Données du joueur
     local health = math.Clamp(ply:Health(), 0, 100)
-    local armor  = math.Clamp(ply:Armor(), 0, 100)
+    local armor  = math.Clamp(ply:Armor(), 0, 150)
     local hunger = math.Clamp(ply:getDarkRPVar("Energy") or 0, 0, 100)
 
     local money  = ply:getDarkRPVar("money")
     local salary = ply:getDarkRPVar("salary")
     local job    = ply:getDarkRPVar("job")
     local name   = ply:getDarkRPVar("rpname")
+    print(armor)
 
     -- Fond général
     draw.RoundedBox(25, 10, ScrH() - 260, 375, 250, HUD_COLORS.background)
@@ -94,7 +96,7 @@ hook.Add("HUDPaint", "CustomHUD", function()
     local spacing = 100
     
 
-    DrawCircleStat(baseX, baseY, health / 100, HUD_COLORS.health, heartImage)
+    DrawCircleStat(baseX, baseY, armor / 150, HUD_COLORS.health, heartImage)
     DrawCircleStat(baseX + spacing, baseY, armor / 100, HUD_COLORS.armor, giletImage)
     DrawCircleStat(baseX + spacing * 2, baseY, hunger / 100, HUD_COLORS.hunger, foodImage)
 end)
